@@ -63,3 +63,24 @@ creature.py
     Creature code for this layer
 explorer.py
     Explorer code for this layer
+
+FastAPI’s dependency injection is particularly useful here. Data may come from dif‐
+ferent parts of the HTTP message, and you’ve already seen how you can specify one
+or more of these dependencies to say where the data is located:
+    Header
+        In the HTTP headers
+    Path
+        In the URL
+    Query
+        After the ? in the URL
+    Body
+        In the HTTP body
+Other, more indirect, sources include the following:
+• Environment variables
+• Configuration settings
+
+Multiple Routers - APIRouter
+    src/web/explorer.py
+
+=== Now Start the Project ===
+1. Define Data Models model/explorer.py
