@@ -166,3 +166,17 @@ Authentication - Who are you?
             pip install python-multipart
 
 Authorization  - What do you want?
+    User-Admintable, UserPermission table(access control-Read Only, Read, Write), UserRole
+
+MiddleWare
+    FastAPI enables insertion of code at the Web layer that does the following:
+        • Intercepts the request
+        • Does something with the request
+        • Passes the request to a path function
+        • Intercepts the response returned by the patch function
+        • Does something with the response
+        • Returns the response to the caller
+    In some cases, you could use either middleware or dependency injection with Depends().
+    Middleware is handier for more global security issues like CORS,
+
+CORS - Cross Origin Resource sharing

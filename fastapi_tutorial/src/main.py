@@ -1,10 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware ### CORS
 
 # import subrouter - multiple router
 from web import explorer, creature, user
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://ui.cryptids.com",],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_header=["*"],
+)
 # import subrouter - multiple endpoints
 app.include_router(explorer.router)
 app.include_router(creature.router)
