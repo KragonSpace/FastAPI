@@ -322,3 +322,56 @@ Performance has two aspects:
         large - StreamingResponse
     Static Files
         Make a directory called static, at the same level as main.py
+
+=== Form and Template ===
+    - form
+        from fastapi import Form
+    - template
+        Make a directory called template alongside main.py to house Jinja-enhanced HTML: template/list.html
+        Configure tempaltes and use one (main.py)
+
+=== Data Discovery and Visualization
+psv - pipe-separated(|) file *.psv
+csv - comma-separated        *.csv
+tsv - tab-separated          *.tsv
+
+    - Chart
+        Matplotlib - Extensive, but needs some fiddling to get the prettiest results
+        Plotly     - Similar to Matplotlib and Seaborn, with an emphasis on interactive graphs
+        Dash       - Built on Plotly as a sort of data dashboard
+        Seaborn    - Built on Matplotlib and offers a higher-level interface, but with less graph types
+        Bokeh      - Integrates with JavaScript to provide dashboard views of very large datasets
+
+        pip install plotly
+        pip install kaleido
+
+        modify - web/creature.py - plot and histogram
+    - Map Packages
+        PyGIS                                         References for spatial data processing in Python
+        PySAL                                         Python Spatial Analysis Library
+        Cartopy                                       Analyzes and maps geospatial data
+        Folium                                        Integrated with JavaScript
+        Python Client for Google Maps Services        API access to Google Maps
+        Geemap                                        Google Earth support
+        Geoplot                                       Extends Cartopy and Matplotlib
+        GeoPandas                                     An extension of our friend pandas
+        ArcGIS and ArcPy                              Esri’s open source interface
+
+        modify - web/creature.py - Map example
+
+=== Python Game ===
+Packages
+    • Text:
+        — Adventurelib
+    • Graphic:
+        — PyGame, primer
+        — pyglet
+        — Python Arcade
+        — HARFANG
+        — Panda3D
+    1. Game Design - Logic
+    2. Game Intialization web/game.py, main.py
+    3. Web part - Game Steps - template/game.html
+    4. service part one - Initialization service/game.py
+    5. service part two - Scoring
+    6. Data Initialization - data/game.py

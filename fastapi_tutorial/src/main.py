@@ -15,6 +15,12 @@ from fastapi.responses import StreamingResponse
 # Static File
 from fastapi.staticfiles import StaticFiles
 
+# Form
+from fastapi import Form
+
+# Template
+from fastapi.templating import Jinja2Templates
+
 # import subrouter - multiple router
 from web import explorer, creature, user
 
@@ -66,6 +72,44 @@ top = Path(__file__).resolve.parent
 app.mount("/static",
             StaticFiles(directory=f"{top}/static", html=True),
             name="free")
+
+# Form
+@app.get("/who2")
+def greet2(name: str = Form()):
+    return f"Hello, {name}?"
+"""
+<form action="http://localhost:8000/who2" method="get">
+    Say hello to my little friend:
+    <input type="text" name="name" value="Bob Frapples">
+    <input type="submit">
+</form>
+"""
+
+@app.post("/who2")
+def greet3(name: str = Form()):
+ return f"Hello, {name}?"
+"""
+<form action="http://localhost:8000/who2" method="post">
+    Say hello to my little friend:
+    <input type="text" name="name">
+    <input type="submit">
+</form>
+"""
+
+# Template
+# Directory containing main.py:
+top = Path(__file__).resolve.parent
+
+template_obj = Jinja2Templates(directory=f"{top}/template")
+# Get some small predefined lists of our buddies:
+from fake.creature import fakes as fake_creatures
+from fake.explorer import fakes as fake_explorers
+@app.get("/list")
+def explorer_list(request: Request):
+    return template_obj.TemplateResponse("list.html",
+                                        {"request": request,
+                                        "explorers": fake_explorers,
+                                        "creatures": fake_creatures})
 
 # Test Endpoints
 # @app.get("/")
