@@ -123,9 +123,21 @@ automated testing - pytest/Unit Tests
 • ValueError is more suited for the wrong value for a given type, but I guess you could say that passing a missing string id to get_one(id) qualifies.
 • You could define your own MissingError if you really want to.
 
+• Some manual tests as you’re first writing the code
+• Unit tests after you’ve fixed Python syntax errors
+• Full tests after you have a full data flow across all layers
+
 === Other Service-Level Stuff ===
 here are some technical site-helper ideas
-    • Logging
-    • Metrics
+    • Logging - FastAPI logs each API call to an endpoint—including the timestamp, method, and
+URL—but not any data delivered via the body or headers.
+    • Metrics - Popular metrics tools nowadays include Prometheus for gathering metrics and
+Grafana for displaying metrics.
     • Monitoring
-    • Tracing
+    • Tracing - A new open source project has taken earlier tracing products like Jaeger and branded
+them as OpenTelemetry. It has a Python API and at least one integration with
+FastAPI.
+
+=== Real DATA layer ===
+- SQLite - DB-API
+Missing & Data Existance -- errors.py
