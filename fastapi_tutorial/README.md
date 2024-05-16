@@ -258,3 +258,46 @@ You’ll also need something above these servers to do the following:
     service running, or firing up more servers if traffic spikes.
 
     https://sumanta9090.medium.com/deploying-a-fastapi-application-on-kubernetes-a-step-by-step-guide-for-production-d74faac4ca36
+
+=== Performance ===
+Performance has two aspects:
+• The time to handle a single request
+• The number of requests that can be handled at once
+
+- Async (async def / def)
+- Caches
+    https://docs.python.org/3/library/functools.html
+    cache() and lru_cache()
+- Databases, Files and Memory
+    - In SQL, any column in a WHERE clause should be indexed.
+    - SQL query optimizer : https://www.sqlite.org/optoverview.html
+- Queues
+    If you’re performing any task that takes longer than a fraction of a second (like send‐
+    ing a confirmation email or downsizing an image), it may be worth handing it off to a
+    job queue like Celery. --- https://docs.celeryq.dev/en/stable/
+- Python Itself : Faster Python
+    Alternatives include the following:
+        • Use PyPy instead of the standard CPython. https://www.pypy.org/
+        • Write a Python extension in C, C++, or Rust. https://docs.python.org/3/extending/extending.html
+        • Convert the slow Python code to Cython (used by Pydantic and Uvicorn themselves). https://cython.org/
+- Troubleshooting
+    Look bottom-up from the time and place where you encounter a problem. This includes time and space performance issues, but also logic and async traps
+- Kinds of Problems
+    404 An authentication or authorization error.
+    422 Usually a Pydantic complaint about use of a model.
+    500 The failure of a service behind your FastAPI one.
+- Logging
+- Metrics(metrics, monitoring, observability, and telemetry)
+    • Prometheus to gather metrics      https://prometheus.io/
+    • Grafana to display them           https://grafana.com/
+    • OpenTelemetry to measure timing   https://opentelemetry.io/
+
+    https://github.com/trallnag/prometheus-fastapi-instrumentator
+    https://dev.to/ken_mwaura1/getting-started-monitoring-a-fastapi-app-with-grafana-and-prometheus-a-step-by-step-guide-3fbn
+    https://grafana.com/grafana/dashboards/16110-fastapi-observability/
+    https://opentelemetry-python-contrib.readthedocs.io/en/latest/instrumentation/fastapi/fastapi.html
+    https://signoz.io/blog/opentelemetry-fastapi/
+    https://opentelemetry.io/docs/languages/python/
+
+
+
