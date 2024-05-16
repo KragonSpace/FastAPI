@@ -141,3 +141,28 @@ FastAPI.
 === Real DATA layer ===
 - SQLite - DB-API
 Missing & Data Existance -- errors.py
+
+=== Authentication and Authorization ===  --- Security Section
+Authentication - Who are you?
+    Username/email and password
+        Using classic HTTP Basic and Digest Authentication
+    API key
+        An opaque long string with an accompanying secret
+    OAuth2
+        A set of standards for authentication and authorization
+    JavaScript Web Tokens (JWT)
+        An encoding format containing cryptographically signed user information
+    
+    --- implementation
+    - simple one - auth.py
+    - oauth2     - web/user.py, User Model, User Data Layer, User Service Layer, User Web Layer ---> main.py(Top Layer)
+
+    - pip install
+        JWT handling
+            pip install python-jose[cryptography]
+        Secure password handling
+            pip install passlib
+        Form handling
+            pip install python-multipart
+
+Authorization  - What do you want?

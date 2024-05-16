@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 
 # import subrouter - multiple router
-from web import explorer, creature
+from web import explorer, creature, user
 
 app = FastAPI()
 
 # import subrouter - multiple endpoints
 app.include_router(explorer.router)
 app.include_router(creature.router)
+app.include_router(user.router)
 
 # Test Endpoints
 # @app.get("/")
