@@ -304,3 +304,5 @@ Performance has two aspects:
 
 === Gallery ===
 - FastAPI with AI - LLM
+    pip install torch torchvision
+    pip install transformers
