@@ -117,6 +117,60 @@ Common service patterns include a combination of the following:
 • One thing / multiple things
 At the RESTful router layer, the nouns are resources.
 
+=== Other Service-Level Stuff ===
+here are some technical site-helper ideas
+    • Logging - FastAPI logs each API call to an endpoint—including the timestamp, method, and
+URL—but not any data delivered via the body or headers.
+    • Metrics - Popular metrics tools nowadays include Prometheus for gathering metrics and
+Grafana for displaying metrics.
+    • Monitoring
+    • Tracing - A new open source project has taken earlier tracing products like Jaeger and branded
+them as OpenTelemetry. It has a Python API and at least one integration with
+FastAPI.
+
+=== Real DATA layer ===
+- SQLite - DB-API
+Missing & Data Existance -- errors.py
+
+=== Authentication and Authorization ===  --- Security Section
+Authentication - Who are you?
+    Username/email and password
+        Using classic HTTP Basic and Digest Authentication
+    API key
+        An opaque long string with an accompanying secret
+    OAuth2
+        A set of standards for authentication and authorization
+    JavaScript Web Tokens (JWT)
+        An encoding format containing cryptographically signed user information
+    
+    --- implementation
+    - simple one - auth.py
+    - oauth2     - web/user.py, User Model, User Data Layer, User Service Layer, User Web Layer ---> main.py(Top Layer)
+
+    - pip install
+        JWT handling
+            pip install python-jose[cryptography]
+        Secure password handling
+            pip install passlib
+        Form handling
+            pip install python-multipart
+
+Authorization  - What do you want?
+    User-Admintable, UserPermission table(access control-Read Only, Read, Write), UserRole
+
+MiddleWare
+    FastAPI enables insertion of code at the Web layer that does the following:
+        • Intercepts the request
+        • Does something with the request
+        • Passes the request to a path function
+        • Intercepts the response returned by the patch function
+        • Does something with the response
+        • Returns the response to the caller
+    In some cases, you could use either middleware or dependency injection with Depends().
+    Middleware is handier for more global security issues like CORS,
+
+CORS - Cross Origin Resource sharing
+
 === Test ===
 automated testing - pytest/Unit Tests
 • TypeError may be the closest, because None is a different type than Creature.
@@ -173,56 +227,34 @@ Load tests show how your application handles heavy traffic:
 
 tools: pip install locust
 
-=== Other Service-Level Stuff ===
-here are some technical site-helper ideas
-    • Logging - FastAPI logs each API call to an endpoint—including the timestamp, method, and
-URL—but not any data delivered via the body or headers.
-    • Metrics - Popular metrics tools nowadays include Prometheus for gathering metrics and
-Grafana for displaying metrics.
-    • Monitoring
-    • Tracing - A new open source project has taken earlier tracing products like Jaeger and branded
-them as OpenTelemetry. It has a Python API and at least one integration with
-FastAPI.
+=== Deployment ===
+You’ll also need something above these servers to do the following:
+• Keep them running (a supervisor)
+• Gather and feed external requests (a reverse proxy)
+• Return responses
+• Provide HTTPS termination (SSL decryption)
 
-=== Real DATA layer ===
-- SQLite - DB-API
-Missing & Data Existance -- errors.py
+- Multiple workers : pip install "uvicorn[standard]" gunicorn
+    gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+        or
+    uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
+- HTTPS
+    How to add HTTPS support to FastAPI by using "Traefik"
+        https://github.com/tiangolo/blog-posts/blob/master/deploying-fastapi-apps-with-https-powered-by-traefik/README.md
+- Docker
+    If you want to host your FastAPI application on a cloud service, you’ll usually need to create a Docker image of it first
+        https://fastapi.tiangolo.com/deployment/docker/
 
-=== Authentication and Authorization ===  --- Security Section
-Authentication - Who are you?
-    Username/email and password
-        Using classic HTTP Basic and Digest Authentication
-    API key
-        An opaque long string with an accompanying secret
-    OAuth2
-        A set of standards for authentication and authorization
-    JavaScript Web Tokens (JWT)
-        An encoding format containing cryptographically signed user information
-    
-    --- implementation
-    - simple one - auth.py
-    - oauth2     - web/user.py, User Model, User Data Layer, User Service Layer, User Web Layer ---> main.py(Top Layer)
+        https://christophergs.com/tutorials/ultimate-fastapi-tutorial-pt-13-docker-deploy/
+- Cloud Services
+    https://christophergs.com/tutorials/ultimate-fastapi-tutorial-pt-6b-linode-deploy-gunicorn-uvicorn-nginx/
+    https://towardsdatascience.com/how-to-deploy-your-fastapi-app-on-heroku-for-free-8d4271a4ab9
+- Kubernetes
+    Kubernetes grew from internal Google code for managing internal systems that were
+    becoming ever more godawfully complex. System administrators (as they were called
+    then) used to manually configure tools like load balancers, reverse proxies, humidors1
+    and so on. Kubernetes aimed to take much of this knowledge and automate it: don’t
+    tell me how to handle this; tell me what you want. This included tasks like keeping a
+    service running, or firing up more servers if traffic spikes.
 
-    - pip install
-        JWT handling
-            pip install python-jose[cryptography]
-        Secure password handling
-            pip install passlib
-        Form handling
-            pip install python-multipart
-
-Authorization  - What do you want?
-    User-Admintable, UserPermission table(access control-Read Only, Read, Write), UserRole
-
-MiddleWare
-    FastAPI enables insertion of code at the Web layer that does the following:
-        • Intercepts the request
-        • Does something with the request
-        • Passes the request to a path function
-        • Intercepts the response returned by the patch function
-        • Does something with the response
-        • Returns the response to the caller
-    In some cases, you could use either middleware or dependency injection with Depends().
-    Middleware is handier for more global security issues like CORS,
-
-CORS - Cross Origin Resource sharing
+    https://sumanta9090.medium.com/deploying-a-fastapi-application-on-kubernetes-a-step-by-step-guide-for-production-d74faac4ca36
