@@ -84,3 +84,5 @@ Multiple Routers - APIRouter
 
 === Now Start the Project ===
 1. Define Data Models model/explorer.py
+2. Create Database - Fake Data fake/explorer.py - functions(CRUD), creature.py - fake data
+
