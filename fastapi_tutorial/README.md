@@ -83,6 +83,49 @@ Multiple Routers - APIRouter
     src/web/explorer.py
 
 === Now Start the Project ===
-1. Define Data Models model/explorer.py
-2. Create Database - Fake Data fake/explorer.py - functions(CRUD), creature.py - fake data
+1. Define Data Models model/explorer.py, creature.py --- MOdel Explorer, Creature
+2. Create Database - Fake Data fake/explorer.py(Explorer) - functions(CRUD,URL VERBs(get, post, patch, put, delete)), creature.py - fake data(Creature)
+3. Sub Route - web/explorer, creature
+4. Pagination and Sorting
+    ex:
+        Sort
+            GET /explorer?sort=country: Get all explorers, sorted by country code.
+        Paginate
+            GET /explorer?offset=10&size=10: Return (in this case, unsorted) explorers in
+            places 10 through 19 of the whole list.
+        Both
+            GET /explorer?sort=country&offset=10&size=10
+    Although you could specify these as individual query parameters, FastAPI’s dependency injection can help:
+    • Define the sort and paginate parameters as a Pydantic model.
+    • Provide the parameters model to the get_all() path function with the Depends
+    feature in the path function arguments.
 
+=== Web layer(interface) -> SERVICE layer -> Data Layer
+Whenever a function in the Web layer needs data that is managed by the Data layer,
+that function should ask the Service layer to be an intermediary. This requires more
+code and may seem unnecessary, but it’s a good idea
+it talks to the Data layer, but in a hushed voice so the Web layer doesn’t know exactly what it’s
+saying. But it also defines any specific business logic, such as interactions between
+resources. Mainly, the Web and Data layers should not care what’s going on in there.
+(The Service layer is a Secret Service.)
+
+The SERVICE layer is the heart of the website, its reason for being. It takes requests
+from multiple sources, accesses the data that is the DNA of the site, and returns
+responses.
+Common service patterns include a combination of the following:
+• Create / retrieve / change (partially or completely) / delete
+• One thing / multiple things
+At the RESTful router layer, the nouns are resources.
+
+=== Test ===
+automated testing - pytest/Unit Tests
+• TypeError may be the closest, because None is a different type than Creature.
+• ValueError is more suited for the wrong value for a given type, but I guess you could say that passing a missing string id to get_one(id) qualifies.
+• You could define your own MissingError if you really want to.
+
+=== Other Service-Level Stuff ===
+here are some technical site-helper ideas
+    • Logging
+    • Metrics
+    • Monitoring
+    • Tracing
