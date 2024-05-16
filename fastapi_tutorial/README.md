@@ -306,3 +306,19 @@ Performance has two aspects:
 - FastAPI with AI - LLM
     pip install torch torchvision
     pip install transformers
+- Files
+    To handle large files, FastAPI’s uploading and downloading features need these extra modules:
+        Python-Multipart
+            pip install python-multipart
+        aio-files
+            pip install aiofiles
+    Uploading Files
+        FastAPI offers two techniques for file uploads: File() and UploadFile.
+            File() is used as the type for a direct file upload. Your path function may be synchronous (def) or asynchronous (async def), but the asynchronous version is better because it won’t tie up your web server while the file is uploading. - small size
+            
+            For large files, it’s better to use UploadFile This creates a Python SpooledTemporary File object, mostly on the server’s disk instead of in memory. This is a Python filelike object, which supports the methods read(), write(), and seek()
+    Downloading File
+        small - from fastapi.responses import FileResponse
+        large - StreamingResponse
+    Static Files
+        Make a directory called static, at the same level as main.py
