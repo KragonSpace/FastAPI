@@ -127,6 +127,52 @@ automated testing - pytest/Unit Tests
 • Unit tests after you’ve fixed Python syntax errors
 • Full tests after you have a full data flow across all layers
 
+pip install pytest OR pip install pytest-mock   ### to get the automatic mocker fixture
+
+set environment variable CRYPTID_UNIT_TEST for the pytest - fixture
+
+- Automated Integration Tests
+Integration tests show how well different code interacts between layers. But if you
+look for examples of this, you get many different answers. Should you test partial call
+trails like Web → Service, Web → Data, and so on?
+
+To fully test every connection in an A → B → C pipeline, you’d need to test the following: (MOCK test)
+• A → B
+• B → C
+• A → C
+
+- Automated Full Tests
+You can fully test each endpoint in the overall API in two ways:
+    Over HTTP/HTTPS
+        Write individual Python test clients that access the server. Many examples in this
+        book have done this, with standalone clients like HTTPie, or in scripts using
+        Requests.
+    Using TestClient
+        Use this built-in FastAPI/Starlette object to access the server directly, without an
+        overt TCP connection.
+
+Two packages are needed:
+    Hypothesis
+        pip install hypothesis
+    Schemathesis
+        pip install schemathesis
+
+Run Schemathesis tests
+     chemathesis http://localhost:8000/openapi.json
+
+- Security Testing
+Use Schemathesis, and Ref its Documentation - https://schemathesis.readthedocs.io/en/stable/auth.html
+
+- Load Testing
+Load tests show how your application handles heavy traffic:
+    • API calls
+    • Database reads or writes
+    • Memory use
+    • Disk use
+    • Network latency and bandwidth
+
+tools: pip install locust
+
 === Other Service-Level Stuff ===
 here are some technical site-helper ideas
     • Logging - FastAPI logs each API call to an endpoint—including the timestamp, method, and

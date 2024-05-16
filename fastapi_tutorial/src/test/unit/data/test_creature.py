@@ -9,9 +9,11 @@ from data import creature
 
 @pytest.fixture
 def sample() -> Creature:
-     return Creature(name="yeti", country="CN", area="Himalayas",
-    description="Harmless Himalayan",
-    aka="Abominable Snowman")
+     return Creature(name="yeti",
+                     country="CN",
+                     area="Himalayas",
+                     description="Harmless Himalayan",
+                     aka="Abominable Snowman")
 
 def test_create(sample):
     resp = creature.create(sample)
